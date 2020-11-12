@@ -310,8 +310,7 @@ public class FTPOperationsImpl implements FTPOperations {
 		Long size = null;
 		Calendar lastMod = null;
 		int type = -1;
-		
-		
+
 		try {
 
 			FTPClient fClient = new FTPClient();
@@ -328,16 +327,50 @@ public class FTPOperationsImpl implements FTPOperations {
 
 			replyCode2 = fClient.getReplyCode();
 
-			logger.warn("subirFichero(): REPLY CODES > " + replyCodeConnection + " -- " + replyCode2 + "\n");
-			logger.info("subirFichero(): " + "Name: "+name+" "+ " - Size: "+size+" "+ " - User: "+user+" "+ " - Type: "+type+" "+ "Last Modification: "+lastMod.toString());
+			logger.warn("mostrarInformacionFile(): REPLY CODES > " + replyCodeConnection + " -- " + replyCode2 + "\n");
+			logger.info("mostrarInformacionFile(): " + "Name: " + name + " " + " - Size: " + size + " " + " - User: "
+					+ user + " " + " - Type: " + type + " " + "Last Modification: " + lastMod.get(lastMod.YEAR)+" - "+lastMod.get(lastMod.MONTH)+" - "+lastMod.get(lastMod.DAY_OF_MONTH));
 			fClient.disconnect();
 
 		} catch (IOException e) {
 
-			logger.error("subirFichero() ERROR");
+			logger.error("mostrarInformacionFile() ERROR");
 			e.printStackTrace();
 
 		}
 	}
 
+	public List<FTPFile> listaFicherosCarpetaAux(String string) { // No devuelve logs, para utilizarse en el metodo de mostrar info
+
+		Integer replyCodeConnection = null;
+		Integer replyCode2 = null;
+		List ls = new ArrayList<FTPFile>();
+
+		try {
+
+			FTPClient fClient = new FTPClient();
+			fClient.connect("localhost");
+			fClient.enterLocalPassiveMode();
+			fClient.login("ftp", "ftp");
+			replyCodeConnection = fClient.getReplyCode();
+			fClient.setFileType(FTP.BINARY_FILE_TYPE);
+			FTPFile[] files = fClient.listFiles();
+
+			for (FTPFile ftpFile : files) {
+				ls.add(ftpFile);
+			}
+
+			replyCode2 = fClient.getReplyCode();
+//			logger.warn("listaFicherosCarpeta(): REPLY CODES > " + replyCodeConnection + " -- " + replyCode2 + "\n");
+//			logger.info("listaFicherosCarpeta(): ");
+			fClient.disconnect();
+
+		} catch (IOException e) {
+
+			logger.error("listaFicherosCarpetaAux() ERROR");
+			e.printStackTrace();
+
+		}
+		return ls;
+	}
 }
