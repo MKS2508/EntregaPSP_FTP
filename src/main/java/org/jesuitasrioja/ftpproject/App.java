@@ -46,6 +46,7 @@ public class App {
 		System.out.println();
 		System.out.println("---------------------------------------------------------------------");
 		System.out.println(ftp.listaFicherosCarpeta("./"));
+		
 		System.out.println();
 		System.out.println();
 		System.out.println("---------------------------------------------------------------------");
@@ -53,7 +54,8 @@ public class App {
 		System.out.println();
 		System.out.println();
 		System.out.println("---------------------------------------------------------------------");
-//		ftp.mostrarInformacionFile(FTPFile); // falta pasar como parametro FTPFILE
+		FTPFile file = ftp.listaFicherosCarpetaAux("./").get(0); //creado metodo auxiliar para coger FTPFile sin mostrar info en el log, basado en listaFicherosCarpeta()
+		ftp.mostrarInformacionFile(file); // 
 		System.out.println();
 		System.out.println();
 		System.out.println("---------------------------------------------------------------------");
