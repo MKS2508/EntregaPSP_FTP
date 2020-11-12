@@ -308,7 +308,7 @@ public class FTPOperationsImpl implements FTPOperations {
 		String name = null;
 		String user = null;
 		Long size = null;
-		Calendar lastMod = null;
+		Calendar lastMod = Calendar.getInstance();
 		int type = -1;
 
 		try {
